@@ -1,0 +1,35 @@
+﻿@model IEnumerable<StoreTest.Models.Product>
+@{
+    string fomatMoney(int? cost)
+    {
+        var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+        return String.Format(info, "{0:c}", cost);
+    }
+    string cropString(string str)
+    {
+        return new string(str.Take(100).ToArray());
+    }
+
+}
+<div class="container">
+    <h4>Danh sách sản phẩm </h4>
+    <ul class="thumbnails">
+        @foreach (var item in Model)
+        {
+            <li class="span3">
+                <div class="thumbnail">
+                    <a href="@Url.Action("DetailProduct","Home", new {ID = item.ID})"><img src="@item.Image" alt="" /></a>
+                    <div class="caption">
+                        <h5>@item.Name</h5>
+                        <p>
+                            @cropString(item.Description)
+                        </p>
+
+                        <h4 style="text-align:center"><a class="btn" href="@Url.Action("DetailProduct","Home", new {ID = item.ID})"> <i class="icon-zoom-in"></i></a> <a class="btn" href="@Url.Action("AddCart","Home", new {ID = item.ID})">Thêm giỏ hàng <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">@fomatMoney(item.Cost)</a></h4>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+
+</div>

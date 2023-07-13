@@ -1,0 +1,76 @@
+﻿@model IEnumerable<StoreTest.Models.Slider>
+    @using StoreTest.Models
+@{
+    Layout = null;
+    string getFirstImage()
+    {
+        if (Model.ToList().Count > 0)
+        {
+            return Model.ToList()[0].Image;
+        }
+        return "";
+    }
+    DBContext db = new DBContext();
+    var listDanhMuc = db.Categories.Where(x => x.IsDeleted == false).ToList();
+    var listTacGia = db.TacGias.Where(x => x.IsDeleted == false).ToList();
+
+}
+<link id="callCss" rel="stylesheet" href="~/Content/Home/themes/bootshop/bootstrap.min.css" media="screen" />
+<link href="~/Content/Home/themes/css/base.css" rel="stylesheet" media="screen" />
+<!-- Bootstrap style responsive -->
+<link href="~/Content/Home/themes/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link href="~/Content/Home/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
+<!-- Google-code-prettify -->
+<link href="~/Content/Home/themes/js/google-code-prettify/prettify.css" rel="stylesheet" />
+<!-- fav and touch icons -->
+<link rel="shortcut icon" href="themes/images/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/Home/themes/images/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/Home/themes/images/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/Home/themes/images/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="~/Content/Home/themes/images/ico/apple-touch-icon-57-precomposed.png">
+<style type="text/css" id="enject"></style>
+<!-- Sidebar ================================================== -->
+<div id="sidebar" class="span3">
+    <!-- Sidebar ================================================== -->
+    <ul id="sideManu" class="nav nav-tabs nav-stacked">
+        <li class="subMenu">
+            <a> Thể loại</a>
+            <ul class="list-group">
+                <li class="list-group-item active" ></li>
+                @foreach (var item in listDanhMuc)
+                {
+                    <li class="list-group-item"><a href="@Url.Action("ProductByCategory","Home", new {ID = item.ID})"><i class="icon-chevron-right"></i>@item.Name</a></li>
+                }
+
+
+            </ul>
+        </li>
+        <li class="subMenu">
+            <a> Tác giả</a>
+            <ul class="list-group">
+                <li class="list-group-item active"></li>
+                @foreach (var item in listTacGia)
+                {
+                    <li class="list-group-item"><a href="@Url.Action("ProductByTacGia","Home", new {ID = item.ID})"><i class="icon-chevron-right"></i>@item.Name</a></li>
+                }
+
+            </ul>
+        </li>
+
+
+    </ul>
+    <br />
+
+    <div class="thumbnail">
+        @foreach (var item in Model)
+        {
+            <img src="@item.Image" alt="Bootshop panasonoc New camera" />
+            <div class="caption">
+                <h5>Sach hay</h5>
+                <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
+            </div>
+        }
+
+    </div><br />
+</div>
+<!-- Sidebar end=============================================== -->

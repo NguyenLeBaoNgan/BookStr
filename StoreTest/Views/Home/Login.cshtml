@@ -1,0 +1,41 @@
+﻿@model StoreTest.Models.Account
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <p class="alert alert-danger">@ViewBag.ThongBao</p>
+            @using (Html.BeginForm())
+            {
+                <label class="label" for="user">Tài khoản</label>
+                <br />
+                @Html.TextBoxFor(Model => Model.Username, null, new
+                {
+                    @id = "user",
+                    @type = "text",
+                    @class = "form-control"
+                })
+                <br />
+                <label class="label" for="user">Mật khẩu</label>
+                <br />
+                @Html.TextBoxFor(Model => Model.Password, null, new
+                {
+                    @id = "pass",
+                    @type = "password",
+                    @class = "form-control"
+                })
+                <br />
+                <button type="submit" class="btn btn-success"> @Html.ActionLink("Dang nhap", "Products")</button>
+               
+            }
+        </div>
+        
+    </div>
+</div>
+

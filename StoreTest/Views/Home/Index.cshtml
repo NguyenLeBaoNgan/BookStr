@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    
+
+}
+@using StoreTest.Models
+@{
+    DBContext db = new DBContext();
+    var ListSeller = db.Products.Where(x => x.IsSeller == true).Take(4).ToList();
+    var ListOnTop = db.Products.Where(x => x.OnTop == true).Take(4).ToList();
+    string fomatMoney(int? cost)
+    {
+        var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+        return String.Format(info, "{0:c}", cost);
+    }
+
+}
+
+<div class="container">
+    <div class="row">
+        @{
+            Html.RenderAction("Slider", "Home");
+        }
+
+        @*San pham hot & giam gia*@
+        <div class="span9">
+            <div class="well well-small">
+                <h4>Sản phẩm nổi bật <small class="pull-right">99+ featured products</small></h4>
+                <div class="row-fluid">
+                    <div id="featured" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <ul class="thumbnails">
+                                    @foreach (var item in ListSeller)
+                                    {
+                                        <li class="span3">
+                                            <div class="thumbnail">
+                                                <i class="tag"></i>
+                                                <a href="product_details.html"><img src="@item.Image" alt=""></a>
+                                                <div class="caption">
+                                                    <h5>@item.Name</h5>
+                                                    <h4><a class="btn" href="@Url.Action("DetailProduct","Home", new {ID = item.ID})">Chi tiết</a> <span class="pull-right">@fomatMoney(item.Cost) </span></h4>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                            <div class="item">
+                                <ul class="thumbnails">
+                                    @foreach (var item in ListOnTop)
+                                    {
+                                        <li class="span3">
+                                            <div class="thumbnail">
+                                                <i class="tag"></i>
+                                                <a href="product_details.html"><img src="@item.Image" alt=""></a>
+                                                <div class="caption">
+                                                    <h5>@item.Name</h5>
+                                                    <h4><a class="btn" href="@Url.Action("DetailProduct","Home", new {ID = item.ID})">Chi tiết</a> <span class="pull-right">@fomatMoney(item.Cost) </span></h4>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
+                        <a class="right carousel-control" href="#featured" data-slide="next">›</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @*Danh sach sp*@
+        @{
+            Html.RenderAction("ProductList", "Home");
+        }
+
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<StoreTest.Models.Cart>
+@{
+    ViewBag.Title = "ShoppingCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string fomatMoney(int? cost)
+    {
+        var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+        return String.Format(info, "{0:c}", cost);
+    }
+}
+<div class="container">
+    <h1>Giỏ hàng của bạn </h1>
+    <table class="table table-bordered">
+        <thead>
+        <th scope="col">Mã sản phẩm</th>
+        <th scope="col">Tên sản phẩm</th>
+        <th scope="col">Hình ảnh</th>
+        <th scope="col">Giá bán</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Thành tiền</th>
+        <th scope="col">Chức năng</th>
+        </thead>
+        <tbody>
+            
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ID</td>
+                        <td>@item.Name</td>
+                        <td><img src="@item.Image" height="2"/></td>
+                        <td>@fomatMoney(item.Cost)</td>
+                        <td><input @item.Quality aria-label="quantity" class="input-qty" min="1" name="" type="number" value="1"></td>
+                        <td>@fomatMoney(item.Cost * item.Quality)</td>
+                        <td><a class="btn btn-danger" href="@Url.Action("RemoveCart", "Home", new {ID = item.ID})">Xóa</a></td>
+                        <td><a class="btn btn-default" href="@Url.Action("", "Home", new {ID = item.ID})">Đặt hàng</a></td>
+                    </tr>
+                }
+         
+        </tbody>
+    </table>
+</div>
+
+
+

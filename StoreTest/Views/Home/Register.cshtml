@@ -1,0 +1,47 @@
+﻿@model StoreTest.Models.Account
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+
+        </div>
+        <div class="col-md-4 col-sm-4">
+
+            @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+            {
+                //@Html.ValidationSummary()
+                @Html.AntiForgeryToken()
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Register</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Username)
+                            @Html.TextBoxFor(m => m.Username, "", new { @class = "form-control", @placeholder = "Last Name" })
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "badge badge-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password)
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "badge badge-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @*<input type="submit" name="submit" class="btn btn-danger" value="Register" />*@
+                            <button type="submit" class="btn btn-success"> @Html.ActionLink("Dang ki","Index", "Products")</button>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+
+    </div>
